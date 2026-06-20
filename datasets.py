@@ -84,7 +84,6 @@ class DOMODatasets:
             FROM jira_audit_all a
             LEFT JOIN mapping m ON a.parent_key = m.issue_key
             WHERE (a.parent_key NOT IN ('AUDIT-19171','AUDIT-81904','EXTAUDIT-8749') OR a.parent_key IS NULL)
-            AND a."Issue Type" IN ('Vulnerability')
         """
         with sqlite3.connect(self.DB_PATH) as connect:
             df = pd.read_sql_query(query, connect)

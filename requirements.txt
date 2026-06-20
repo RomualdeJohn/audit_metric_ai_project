@@ -1,2 +1,0 @@
-pydomo
-load_dotenv
