@@ -27,8 +27,8 @@ def validate_query(query: str) -> str | None:
     if not normalized:
         return "Query is empty."
 
-    # if not normalized.upper().startswith("SELECT"):
-    #     return "Only SELECT queries are allowed."
+    if not normalized.upper().startswith("SELECT"):
+        return "Only SELECT queries are allowed."
 
     if FORBIDDEN_KEYWORDS.search(normalized):
         return "Query contains forbidden SQL keywords."
