@@ -44,10 +44,10 @@ logs/
 *.log
 
 # Generated local database
-database/*.db
-database/*.db-journal
-database/*.db-wal
-database/*.db-shm
+# database/*.db
+# database/*.db-journal
+# database/*.db-wal
+# database/*.db-shm
 
 # Jupyter Notebook
 .ipynb_checkpoints/
