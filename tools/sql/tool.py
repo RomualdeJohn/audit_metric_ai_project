@@ -10,9 +10,18 @@ from logger import get_logger
 logger = get_logger(__name__)
 
 MAX_ROWS = 500
+ALLOWED_TABLE = "overall_vulnerability"
 
 FORBIDDEN_KEYWORDS = re.compile(
     r"\b(INSERT|UPDATE|DELETE|DROP|ALTER|CREATE)\b",
+    re.IGNORECASE,
+)
+FORBIDDEN_TABLES = re.compile(
+    r"\b(jira_audit_all|jira_audit_filtered|sqlite_\w+)\b",
+    re.IGNORECASE,
+)
+TABLE_REF_PATTERN = re.compile(
+    r"\b(?:FROM|JOIN)\s+([a-zA-Z_][a-zA-Z0-9_]*)",
     re.IGNORECASE,
 )
 
@@ -35,6 +44,14 @@ def validate_query(query: str) -> str | None:
 
     if ";" in normalized:
         return "Multiple SQL statements are not allowed."
+
+    if FORBIDDEN_TABLES.search(normalized):
+        return "Query references a disallowed table."
+
+    table_refs = TABLE_REF_PATTERN.findall(normalized)
+    for table_name in table_refs:
+        if table_name.lower() != ALLOWED_TABLE:
+            return f"Only the {ALLOWED_TABLE} table is allowed."
 
     return None
 

@@ -9,7 +9,7 @@ from pydantic_ai import Agent
 from pydantic_ai.models.anthropic import AnthropicModel
 from pydantic_ai.providers.anthropic import AnthropicProvider
 
-from context import build_schema_prompt
+from context import SCHEMA_CONTEXT
 from logger import get_logger
 from tools.sql.tool import execute_readonly_sql
 
@@ -26,7 +26,7 @@ SYSTEM_INSTRUCTIONS = f"""
 You are Audit Metric AI, a data analyst for Jira audit and vulnerability tickets.
 You can also help the user to give KPI of an individual auditor, such as how many tickets an auditor has resolved, how many tickets an auditor has opened, how many tickets an auditor has closed, etc.
 
-{build_schema_prompt()}
+{SCHEMA_CONTEXT}
 
 When answering:
 1. Use run_sql to fetch data before answering factual questions.
